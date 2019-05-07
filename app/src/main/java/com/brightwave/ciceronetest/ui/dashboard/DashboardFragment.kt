@@ -5,14 +5,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.brightwave.ciceronetest.R
+import com.brightwave.ciceronetest.ui.fragments.BaseFragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
-class DashboardFragment : Fragment() {
-
+class DashboardFragment : BaseFragment() {
+    override fun restoreFragment() {
+        navView?.menu?.findItem(R.id.navigation_dashboard)?.isChecked = true
+        if (visibilityNavView)
+            navView?.visibility = View.GONE
+        else
+            navView?.visibility = View.VISIBLE
+    }
     private lateinit var dashboardViewModel: DashboardViewModel
+    var navView: BottomNavigationView? = null
+    var visibilityNavView: Boolean = false
+
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -26,6 +36,9 @@ class DashboardFragment : Fragment() {
         dashboardViewModel.text.observe(this, Observer {
             textView.text = it
         })
+        navView = activity!!.findViewById(R.id.nav_view)
+        visibilityNavView = arguments?.getBoolean(HIDE_BOTTOM) ?: false
+
         return root
     }
 

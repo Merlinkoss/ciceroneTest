@@ -2,6 +2,7 @@ package com.brightwave.ciceronetest
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.brightwave.ciceronetest.ui.fragments.BaseFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import ru.terrakok.cicerone.android.support.SupportAppNavigator
 import ru.terrakok.cicerone.commands.Command
@@ -45,5 +46,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         SampleApplication.INSTANCE.router.exit()
+        val f = (supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as BaseFragment)
+        f.restoreFragment()
     }
 }
